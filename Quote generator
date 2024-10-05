@@ -1,0 +1,92 @@
+import 'dart:math';
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(QuoteGeneratorApp());
+}
+
+class QuoteGeneratorApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Quote Generator',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: QuoteHomePage(),
+    );
+  }
+}
+
+class QuoteHomePage extends StatefulWidget {
+  @override
+  _QuoteHomePageState createState() => _QuoteHomePageState();
+}
+
+class _QuoteHomePageState extends State<QuoteHomePage> {
+  final List<Map<String, String>> quotes = [
+    {"text": "Enjoy every moment.", "author": ""},
+    {"text": "Now or never!", "author": ""},
+    {"text": "Remember who you are.", "author": ""},
+    {"text": "I’ll think about it tomorrow.", "author": "— Gone with the wind"},
+    {"text": "Knowledge is power.", "author": "— Sir Francis Bacon"},
+    {
+      "text":
+          "Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.",
+      "author": "— Rumi"
+    },
+    {"text": "We do not remember days, we remember moments.", "author": "— Cesare Pavese"},
+    {"text": "Follow your heart.", "author": ""},
+    {"text": "Fall seven times and stand up eight.", "author": "— Japanese Proverb"},
+    {
+      "text": "Your time is limited, so don’t waste it living someone else’s life.",
+      "author": "— Steve Jobs"
+    },
+    {
+      "text": "If you do not have control over your mouth, you will not have control over your future.",
+      "author": "— Germany Kent"
+    },
+  ];
+
+  String displayedQuote = "Press the button to generate a quote.";
+
+  void generateQuote() {
+    final randomIndex = Random().nextInt(quotes.length);
+    setState(() {
+      String author = quotes[randomIndex]["author"]!.isNotEmpty
+          ? ' ${quotes[randomIndex]["author"]}'
+          : '';
+      displayedQuote =
+          '"${quotes[randomIndex]["text"]}"$author';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Quote Generator'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                displayedQuote,
+                style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: generateQuote,
+                child: Text('Generate Quote'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
